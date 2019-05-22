@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/pkg/errors"
 	"os"
@@ -17,28 +16,39 @@ func inputText(input string)(string){
 	inputData := make([]byte, 6)
 	dataCount, err := file.Read(inputData)
 
-	numberOfSlices := bytes.IndexByte(inputData, 0)
-	fmt.Printf("number of slices: %d\n", numberOfSlices)
-
 	return string(inputData[:dataCount])
 }
 
-func inputMap(input string)map[int]string{
+// Takes an input and returns a map object
+func inputMap(input string)(map[int]string){
 
 	inputMap := make(map[int]string, len(input))
 
-	for _, i := range input{
-		fmt.Printf("i: %s\n", string(i))
-		for n, uv := range input {
-			inputMap[n] = string(uv)
-		}
+	for n, uv := range input {
+		inputMap[n] = string(uv)
 	}
 	return inputMap
 }
 
+// Takes a map object
 func countUnique(inputMap map[int]string){
 
-	// return unique count, doubles count
+	key := make([]int, len(inputMap))
+
+	for index := range inputMap {
+		key = append(key, index)
+	}
+
+	//var uniqueValues []string
+	//var duplicateValues map[string]int
+	//
+	//for k, v := range inputMap{
+	//	if v ==
+	//}
+
+
+	// Now match input value w/ all vaules.  do the keys matchup. if not unique pile
+	// else
 }
 
 func main(){
@@ -46,9 +56,8 @@ func main(){
 	// how many unique intances ? - Done
 	// How to match up duplicates
 	// Do a count of duplicates.
-	data := inputText("input.txt")
 
-	dd := inputMap(data)
+	dd := inputMap(inputText("input.txt"))
 	for _, n := range dd{
 		fmt.Printf("number of unique values: %s\n", string(n))
 	}
