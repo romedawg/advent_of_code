@@ -13,7 +13,7 @@ func inputText(input string)(string){
 		errors.Wrapf(err, "could not open file")
 	}
 
-	inputData := make([]byte, 6)
+	inputData := make([]byte, 10)
 	dataCount, err := file.Read(inputData)
 
 	return string(inputData[:dataCount])
@@ -31,34 +31,32 @@ func inputMap(input string)(map[int]string){
 }
 
 // Takes a map object
-func countUnique(inputMap map[int]string){
+func countUnique(inputMap map[int]string)(map[string]int){
 
 	key := make([]int, len(inputMap))
+	valueCount := make(map[string]int, len(inputMap))
 
-	for index := range inputMap {
+	for index, v := range inputMap {
 		key = append(key, index)
+		valueCount[v] = 0
 	}
 
-	//var uniqueValues []string
-	//var duplicateValues map[string]int
-	//
-	//for k, v := range inputMap{
-	//	if v ==
-	//}
-
-
-	// Now match input value w/ all vaules.  do the keys matchup. if not unique pile
-	// else
+	for k, v := range inputMap{
+		for _, vv := range inputMap[k+1:-1] {
+			if v == string(vv) {
+				valueCount[v] = +1
+			}
+		}
+	}
+	return valueCount
 }
 
 func main(){
-	// evaluate...
-	// how many unique intances ? - Done
-	// How to match up duplicates
-	// Do a count of duplicates.
 
 	dd := inputMap(inputText("input.txt"))
 	for _, n := range dd{
 		fmt.Printf("number of unique values: %s\n", string(n))
 	}
+
+	fmt.Printf("%s", countUnique(dd))
 }
