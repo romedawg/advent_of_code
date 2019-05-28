@@ -19,7 +19,7 @@ func inputText(input string)(string){
 	return string(inputData[:dataCount])
 }
 
-// Takes an input and returns a map object - no longer a map, TODO move this to the input string func
+// Takes an input and returns a slice of strings
 func inputMap(input string)([]string){
 
 	inputMap := make([]string, len(input))
@@ -30,7 +30,7 @@ func inputMap(input string)([]string){
 	return inputMap
 }
 
-// Takes a map object
+// Takes a slice of strings and returns a map[letter(string)]count(int)
 func countUnique(inputSlice []string)(map[string]int){
 
 	key := make([]int, len(inputSlice))
@@ -53,9 +53,8 @@ func countUnique(inputSlice []string)(map[string]int){
 
 func main(){
 
-	// Contains a slice of strings, whatever the input is.
-	dd := inputMap(inputText("input.txt"))
+	letters := inputMap(inputText("input.txt"))
 
-	valueCount := countUnique(dd)
-	fmt.Printf("letter %s\n", valueCount)
+	letterCount := countUnique(letters)
+	fmt.Printf("letter %s\n", letterCount)
 }
