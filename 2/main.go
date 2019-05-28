@@ -19,10 +19,10 @@ func inputText(input string)(string){
 	return string(inputData[:dataCount])
 }
 
-// Takes an input and returns a map object
-func inputMap(input string)(map[int]string){
+// Takes an input and returns a map object - no longer a map, TODO move this to the input string func
+func inputMap(input string)([]string){
 
-	inputMap := make(map[int]string, len(input))
+	inputMap := make([]string, len(input))
 
 	for n, uv := range input {
 		inputMap[n] = string(uv)
@@ -31,32 +31,31 @@ func inputMap(input string)(map[int]string){
 }
 
 // Takes a map object
-func countUnique(inputMap map[int]string)(map[string]int){
+func countUnique(inputSlice []string)(map[string]int){
 
-	key := make([]int, len(inputMap))
-	valueCount := make(map[string]int, len(inputMap))
+	key := make([]int, len(inputSlice))
+	letterCount := make(map[string]int, len(inputSlice))
 
-	for index, v := range inputMap {
+	for index, value := range inputSlice {
 		key = append(key, index)
-		valueCount[v] = 0
+		letterCount[value] = 1
 	}
 
-	for k, v := range inputMap{
-		for _, vv := range inputMap[k+1:-1] {
-			if v == string(vv) {
-				valueCount[v] = +1
+	for k, l := range inputSlice {
+		for _, vv := range inputSlice[k+1:] {
+			if inputSlice[k] == string(vv) {
+				letterCount[l] = letterCount[l] + 1
 			}
 		}
 	}
-	return valueCount
+	return letterCount
 }
 
 func main(){
 
+	// Contains a slice of strings, whatever the input is.
 	dd := inputMap(inputText("input.txt"))
-	for _, n := range dd{
-		fmt.Printf("number of unique values: %s\n", string(n))
-	}
 
-	fmt.Printf("%s", countUnique(dd))
+	valueCount := countUnique(dd)
+	fmt.Printf("letter %s\n", valueCount)
 }
