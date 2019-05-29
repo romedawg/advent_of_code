@@ -33,18 +33,18 @@ func inputMap(input string)([]string){
 // Takes a slice of strings and returns a map[letter(string)]count(int)
 func countUnique(inputSlice []string)(map[string]int){
 
-	key := make([]int, len(inputSlice))
+	//key := make(map[int]string, len(inputSlice))
 	letterCount := make(map[string]int, len(inputSlice))
 
-	for index, value := range inputSlice {
-		key = append(key, index)
+	for _, value := range inputSlice {
+		//key[index] = value
 		letterCount[value] = 1
 	}
 
 	for k, l := range inputSlice {
 		for _, vv := range inputSlice[k+1:] {
 			if inputSlice[k] == string(vv) {
-				letterCount[l] = letterCount[l] + 1
+				letterCount[l] += 1
 			}
 		}
 	}
@@ -57,4 +57,9 @@ func main(){
 
 	letterCount := countUnique(letters)
 	fmt.Printf("letter %s\n", letterCount)
+
+	for letter, count := range letterCount{
+		fmt.Printf("letter %s count %d\n", letter, count)
+	}
+
 }
