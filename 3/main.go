@@ -6,16 +6,16 @@ import (
 	"github.com/pkg/errors"
 	"io"
 	"os"
-	"strings"
+	"strconv"
 )
 
 // Define the base of the carpet
-//struct{
-//default_text "."
-//pattern = "#"
-//width = 11
-//heght = 11
-//}
+type orderForm struct {
+	orderNumber int
+	pattern string
+	border string
+	portrait string
+}
 
 func input(inputFile string)[]string{
 	file, err := os.Open(inputFile)
@@ -26,7 +26,7 @@ func input(inputFile string)[]string{
 	read := bufio.NewReader(file)
 
 	//lineData := make([]byte, 0, 256)
-	var data []string
+	var rawData []string
 
 	defer file.Close()
 	for {
@@ -35,27 +35,34 @@ func input(inputFile string)[]string{
 		if err == io.EOF{
 			break
 		}
-		data = append(data, string(line))
+		rawData = append(rawData, string(line))
 	}
-
-	return data
-}
-func returnCarpet(order string){
-
-	dd := strings.Split(string(order), " ")
-
-	for _,v := range dd {
-		fmt.Printf("%s", v)
-	}
+	return rawData
 }
 
 func main(){
 
 	data := input("input.txt")
 
-	for _, x := range data{
-		dd := strings.Split(x, " ")
+	order := make(map[int]orderForm)
 
-		fmt.Printf("%s\n", dd[0])
+	for n, x := range data{
+		fmt.Printf("%s\n", string(x[1:2]))
+
+		orderNum, err :=  strconv.Atoi(string(x[1:2]))
+		if err !=nil {
+			errors.Wrap(err, "failed")
+		}
+		pattern := string(x[3:4])
+		border :=  string(x[5:8])
+		portrait := string(x[10:])
+
+		order[n] = orderForm{
+			 orderNum,
+			 pattern,
+			 border,
+			 portrait,
+		}
 	}
+	fmt.Printf("%d\n",order[0])
 }
